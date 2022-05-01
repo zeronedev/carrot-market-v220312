@@ -16,7 +16,7 @@ const ItemDetail: NextPage = () => {
         </div>
         <div className="mt-5">
           <h1 className="text-3xl font-bold text-gray-900">Galaxy S50</h1>
-          <span className="text-3xl block mt-3 text-gray-900">$140</span>
+          <span className="text-2xl block mt-3 text-gray-900">$140</span>
           <p className="my-6 text-gray-700">
             놀라운 기술로 완성된 전문가 수준의 카메라로 어둠 속 최고의 순간도
             놓치지 마세요. 더 큰 픽셀로 더 많은 빛을 흡수하고, 슈퍼 클리어
