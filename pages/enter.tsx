@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { cls } from "../libs/utils";
-import Button from "./components/button";
-import Input from "./components/input";
+import Button from "../components/button";
+import Input from "../components/input";
 
 export default function Enter() {
   const [method, setMethod] = useState<"email" | "phone">("email");
