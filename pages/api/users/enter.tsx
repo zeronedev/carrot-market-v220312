@@ -30,12 +30,12 @@ async function handler(
     },
   });
   if (phone) {
-    const message = await twilioClient.messages.create({
+    /*     const message = await twilioClient.messages.create({
       messagingServiceSid: process.env.TWILIO_MSID,
       to: process.env.TWILIO_MY_PHONE!,
       body: `당신의 로그인 토큰은 ${payload} 입니다`,
     });
-    console.log(message);
+    console.log(message); */
   }
   return res.json({ ok: true });
 }
