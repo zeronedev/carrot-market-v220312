@@ -31,7 +31,6 @@ export default function useMutation<T = any>(
     })
       .then((response) => response.json().catch(() => {}))
       .then((data) => setState((prev) => ({ ...prev, data })))
-      // .then(setData) //.then((json) => setData(json)) 를 줄인코드;
       .catch((error) => setState((prev) => ({ ...prev, error })))
       .finally(() => setState((prev) => ({ ...prev, loading: false })));
   }

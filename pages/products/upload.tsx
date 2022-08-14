@@ -3,11 +3,25 @@ import Button from "@components/button";
 import Input from "@components/input";
 import Layout from "@components/layout";
 import TextArea from "@components/textarea";
+import { useForm } from "react-hook-form";
+import useMutation from "@libs/client/useMutation";
+
+interface UploadProductForm {
+  name: string;
+  price: number;
+  description: string;
+}
 
 const Upload: NextPage = () => {
+  const { register, handleSubmit } = useForm<UploadProductForm>();
+  const [uploadProduct, { loading, data }] = useMutation("/api/products");
+  const onValid = (data: UploadProductForm) => {
+    if (loading) return;
+    console.log(data);
+  };
   return (
-    <Layout canGoBack title="상품 등록">
-      <form className="px-4 py-10 space-y-5">
+    <Layout canGoBack title="Upload Product - 상품 등록">
+      <form className="px-4 py-10 space-y-5" onSubmit={handleSubmit(onValid)}>
         <div>
           <label className="w-full cursor-pointer text-gray-600 hover:text-orange-500 hover:border-orange-500 flex items-center justify-center border-2 border-dashed border-gray-300 h-48 rounded-md">
             <svg
@@ -28,17 +42,28 @@ const Upload: NextPage = () => {
             <input className="hidden" type="file" />
           </label>
         </div>
-        <Input name="name" label="Name" type="text" required />
         <Input
-          name="price"
-          label="가격"
+          register={register("name", { required: true })}
+          name="name"
+          label="Name - 이름"
           type="text"
-          kind="price"
-          placeholder="0"
           required
         />
-        <TextArea name="description" label="설명" />
-        <Button text="상품 등록" />
+        <Input
+          register={register("price", { required: true })}
+          name="price"
+          label="Price - 가격"
+          type="text"
+          kind="price"
+          required
+        />
+        <TextArea
+          register={register("description", { required: true })}
+          name="description"
+          label="Description - 설명"
+          required
+        />
+        <Button text={loading ? "Loading..." : "상품 등록"} />
       </form>
     </Layout>
   );
