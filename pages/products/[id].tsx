@@ -1,8 +1,16 @@
 import type { NextPage } from "next";
 import Button from "@components/button";
 import Layout from "@components/layout";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import Link from "next/link";
 
 const ItemDetail: NextPage = () => {
+  const router = useRouter();
+  const { data } = useSWR(
+    router.query.id ? `/api/products/${router.query.id}` : null
+  );
+  console.log(data);
   return (
     <Layout canGoBack>
       <div className="px-4 py-4">
@@ -11,26 +19,24 @@ const ItemDetail: NextPage = () => {
           <div className="flex cursor-pointer py-3 border-t border-orange-400 border-b items-center space-x-3">
             <div className="w-12 h-12 rounded-full bg-slate-300" />
             <div>
-              <p className="text-sm font-medium text-gray-700">Steve Jebs</p>
-              <p className="text-xs font-medium text-gray-500">
-                View profile &rarr;
+              <p className="text-sm font-medium text-gray-700">
+                {data?.product?.user?.name}
               </p>
+              <Link href={`/users/profiles/${data?.product?.user?.id}`}>
+                <a className="text-xs font-medium text-gray-500">
+                  View profile &rarr;
+                </a>
+              </Link>
             </div>
           </div>
           <div className="mt-5">
-            <h1 className="text-3xl font-bold text-gray-900">Galaxy S50</h1>
-            <span className="text-2xl block mt-3 text-gray-900">$140</span>
-            <p className="my-6 text-gray-700">
-              놀라운 기술로 완성된 전문가 수준의 카메라로 어둠 속 최고의 순간도
-              놓치지 마세요. 더 큰 픽셀로 더 많은 빛을 흡수하고, 슈퍼 클리어
-              글래스로 빛반사를 최소화해 대낮에 찍은 듯 선명하고 디테일이
-              생생하게 살아있는 밤 사진을 찍을 수 있답니다.어둡다고 촬영을
-              포기하셨다면, 이젠 포기하지 마세요. 동영상 촬영에 획기적인 도약을
-              이룬 나이토그래피. 조도에 맞춰 최적의 프레임 속도로 자동 조정되어
-              동영상을 더 밝게 촬영해 줍니다. 프레임의 노이즈를 제거하는 수퍼
-              나이트 솔루션을 탑재한 4 nm 프로세서니까. 태양 아래서든, 별빛
-              아래서든 고화질의 생생한 영상을 촬영해 보세요.
-            </p>
+            <h1 className="text-3xl font-bold text-gray-900">
+              {data?.product?.name}
+            </h1>
+            <span className="text-2xl block mt-3 text-gray-900">
+              {data?.product?.price}
+            </span>
+            <p className="my-6 text-gray-700">{data?.product?.description}</p>
             <div className="flex items-center justify-between space-x-2">
               <Button large text="Talk to seller" />
               <button className="p-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500">
